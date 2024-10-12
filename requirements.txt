@@ -1,0 +1,7 @@
+langchain-core==0.3.10
+langchain-community==0.3.2
+langchain-openai==0.2.2
+pydantic==2.9.2
+tqdm==4.66.5
+neo4j==5.25.0
+beautifulsoup4==4.12.3
