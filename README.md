@@ -1,6 +1,6 @@
 # Threat intelligence knowledge graph
 
-Constructing Knowledge Graphs from cyber security reports using OpenAI and neo4j
+This project automates the creation of a knowledge graph from security reports. The extracted entities and relationships are structured and stored as nodes and edges in a Neo4j database, allowing for a detailed, queryable graph representation of intel.
 
 ## Overview
 
@@ -10,7 +10,7 @@ The Threat intelligence knowledge graph is a Python-based tool that extracts con
 
 - Python
 - Existing neo4j instance (local or cloud-based)
-- OpenAI API Key
+- OpenAI API Key 
 
 ## Usage
 
@@ -20,15 +20,19 @@ python -m venv venv
 pip install -r .\requirements.txt
 ```
 
-Replace `security_report_url` with a URL and `# neo4j configuration` with your neo4j database information.
+Update `src/threat intel knowledge graph/config.py` with necessary info.
 
-Add your openai API to the environment variables, or a .env file.
+Add a `.env` file, or set your environment variables.
 
 ## Currently implementing
 
-- More precise prompting / threat intel extraction techniques
-- Web interface for more useful and accessible views of intel
-- Opening the application to more case studies, such as geopolitical threat analysis.
+This is an **alpha stage** project with incomplete features.
+
+- New techniques such as fine-tuning and refining prompts.
+- Widening scope to any article related to security, such as geopolitical reports (terrorism, crime, politics).
+- Web interface for more useful and accessible views of intel.
+
+Once the project is in beta, the application will continuously run and analyse open source intelligence.
 
 ## Disclaimer
 
