@@ -1,8 +1,12 @@
-# src/threat_knowledge_graph/models/prompts.py
+"""
+Prompts for extracting knowledge graphs from security reports.
+"""
+
+from typing import List, Dict, Any
 
 # Base Prompt Template
 PROMPT_TEMPLATE = """
-# Neo4j Knowledge Graph Instructions for GPT-4
+# Neo4j Knowledge Graph Instructions
 ## 1. Overview
 You are an advanced algorithm specialized in extracting and structuring information to build a Neo4j graph from cyber security reports.
 - **Nodes** represent cyber security entities and concepts relevant to the report.
@@ -27,21 +31,62 @@ You are an advanced algorithm specialized in extracting and structuring informat
 ## 5. Neo4j Compatibility
 - **Format**: Structure the output in a JSON format compatible with Neo4j's import tools, including separate sections for nodes and relationships.
 - **Identifiers**: Ensure that each node has a unique `id` and that relationships correctly reference these IDs in the `startNode` and `endNode` fields.
-## 6. Strict Compliance
+## 6. Output Format
+Return the graph as JSON with the exact format of:
+{{
+  "nodes": [
+    {{
+      "id": "unique_id_string",
+      "type": "NodeType",
+      "properties": [
+        {{"key": "propertyName", "value": "propertyValue"}}
+      ]
+    }}
+  ],
+  "rels": [
+    {{
+      "source": {{"id": "source_node_id", "type": "SourceNodeType"}},
+      "target": {{"id": "target_node_id", "type": "TargetNodeType"}},
+      "type": "RELATIONSHIP_TYPE",
+      "properties": [
+        {{"key": "propertyName", "value": "propertyValue"}}
+      ]
+    }}
+  ]
+}}
+## 7. Strict Compliance
 Adhere strictly to these guidelines. Any deviation may lead to errors in the graph structure or import process.
 """
 
-def get_prompt_template(allowed_nodes: list, allowed_rels: list) -> str:
+
+def get_prompt_template(allowed_nodes: List[str], allowed_rels: List[str]) -> str:
     """
     Generate the prompt template with allowed nodes and relationships.
 
     Args:
-        allowed_nodes (list): List of allowed node labels.
-        allowed_rels (list): List of allowed relationship types.
+        allowed_nodes: List of allowed node labels.
+        allowed_rels: List of allowed relationship types.
 
     Returns:
-        str: Formatted prompt template.
+        Formatted prompt template. This will contain the {input} placeholder
+        to be filled later by the extractor.
     """
     allowed_nodes_str = "- **Allowed Node Labels:** " + ", ".join(allowed_nodes) if allowed_nodes else ""
     allowed_rels_str = "- **Allowed Relationship Types:** " + ", ".join(allowed_rels) if allowed_rels else ""
+    # This format call only fills allowed_nodes_str and allowed_rels_str
     return PROMPT_TEMPLATE.format(allowed_nodes_str=allowed_nodes_str, allowed_rels_str=allowed_rels_str)
+
+
+def create_prompt_template(prompt_text: str) -> str:
+    """
+    Format the prompt text with placeholders for input.
+
+    Args:
+        prompt_text: The text for the prompt template.
+
+    Returns:
+        A formatted string prompt template.
+    """
+    # This function seems redundant given how get_prompt_template works now.
+    # It doesn't appear to be used by the OpenAI extractor.
+    return prompt_text
