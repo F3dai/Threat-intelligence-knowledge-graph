@@ -13,27 +13,45 @@ from threat_intel_kg.main import process_urls
 from threat_intel_kg.config import DEFAULT_ALLOWED_NODES, DEFAULT_ALLOWED_RELATIONSHIPS
 
 
-def print_summary(stats: List[Dict[str, Any]]) -> None:
+def print_summary(stats: List[Dict[str, Any]], model_provider: str = "openai") -> None:
     """
     Print a summary of the processing statistics.
     
     Args:
         stats: The processing statistics.
+        model_provider: The model provider used.
     """
-    total_nodes = sum(s["total_nodes"] for s in stats)
-    total_relationships = sum(s["total_relationships"] for s in stats)
-    successful_chunks = sum(s["successful_chunks"] for s in stats)
-    failed_chunks = sum(s["failed_chunks"] for s in stats)
-    total_time = sum(s["processing_time"] for s in stats)
+    total_nodes = sum(s.get("total_nodes", 0) for s in stats)
+    total_relationships = sum(s.get("total_relationships", 0) for s in stats)
+    successful_chunks = sum(s.get("successful_chunks", 0) for s in stats)
+    failed_chunks = sum(s.get("failed_chunks", 0) for s in stats)
+    total_time = sum(s.get("processing_time", 0) for s in stats)
+    total_api_calls = sum(s.get("api_calls", 0) for s in stats)
+    
+    # Model name is already correctly formatted in the CLI
+    model_name = model_provider
     
     print("\n=== Processing Summary ===")
-    print(f"Processed {len(stats)} URLs")
+    print(f"Processed {len(stats)} URLs using {model_name} extractor")
     print(f"Successful chunks: {successful_chunks}")
     print(f"Failed chunks: {failed_chunks}")
+    if model_provider != "ner":
+        print(f"Total API calls: {total_api_calls}")
     print(f"Total nodes added: {total_nodes}")
     print(f"Total relationships added: {total_relationships}")
     print(f"Total processing time: {total_time:.2f} seconds")
     print("==========================")
+    
+    if model_provider == "gemini-2.5-pro":
+        print("NOTE: Gemini-2.5-Pro has rate limits of 5 RPM and 25 RPD")
+    elif model_provider == "gemini-2.0-flash":
+        print("NOTE: Gemini-2.0-Flash has rate limits that may affect usage")
+    elif model_provider == "gemini-2.5-flash-preview-04-17":
+        print("NOTE: Gemini-2.5-Flash-Preview has rate limits that may affect usage")
+    elif model_provider == "claude-3-5-haiku":
+        print("NOTE: Claude-3.5-Haiku may have request volume limitations on your plan")
+    elif model_provider == "claude-3-5-sonnet-20240620":
+        print("NOTE: Claude-3.5-Sonnet may have request volume limitations on your plan")
 
 
 def main():
@@ -60,9 +78,11 @@ def main():
     )
     process_parser.add_argument(
         "--model",
-        choices=["openai", "gemini"],
-        default="openai",
-        help="Model provider to use (openai or gemini)"
+        choices=["gpt-3.5-turbo", "gpt-4-turbo", "gpt-4o", 
+                "gemini-2.5-pro", "gemini-2.0-flash", "gemini-2.5-flash-preview-04-17", 
+                "claude-3-5-haiku", "claude-3-5-sonnet-20240620", "ner"],
+        default="gpt-3.5-turbo",
+        help="Model to use (OpenAI: gpt-3.5-turbo, gpt-4-turbo, gpt-4o; Gemini: gemini-2.5-pro, gemini-2.0-flash, gemini-2.5-flash-preview-04-17; Claude: claude-3-5-haiku, claude-3-5-sonnet-20240620; or ner)"
     )
     
     # Version command
@@ -77,8 +97,7 @@ def main():
     
     # Handle version command
     if args.command == "version":
-        from threat_intel_kg import __version__
-        print(f"Threat Intelligence Knowledge Graph v{__version__}")
+        print(f"Threat Intelligence Knowledge Graph v0.3.0")
         sys.exit(0)
     
     # Handle process command
@@ -91,6 +110,10 @@ def main():
             datefmt="%Y-%m-%d %H:%M:%S",
         )
         
+        # Always set DEBUG level for NER extractor when using it with verbose
+        if args.verbose and args.model == "ner":
+            logging.getLogger("threat_intel_kg.extractors.ner_extractor").setLevel(logging.DEBUG)
+        
         # Process URLs
         stats = process_urls(
             args.urls,
@@ -101,7 +124,7 @@ def main():
         )
         
         # Print summary
-        print_summary(stats)
+        print_summary(stats, args.model)
 
 
 if __name__ == "__main__":

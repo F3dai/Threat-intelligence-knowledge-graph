@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Stealth Mode: Chinese Cyber Espionage Actors Continue to Evolve Tactics to Avoid Detection",
+    "description": "Mandiant details how Chinese cyber espionage groups are increasingly using zero-day exploits, living-off-the-land techniques, and botnets to evade detection and complicate attribution in global cyber operations.",
+    "url": "https://cloud.google.com/blog/topics/threat-intelligence/chinese-espionage-tactics"
+  },
+  {
+    "name": "Sandworm Disrupts Power in Ukraine Using Operational Technology",
+    "description": "Analysis of the Sandworm group's cyberattack on Ukraine's power grid, focusing on their use of operational technology (OT) to cause real-world disruption.",
+    "url": "https://cloud.google.com/blog/topics/threat-intelligence/sandworm-disrupts-power-ukraine-operational-technology/"
+  },
+  {
+    "name": "Russian Hackers Using ClickFix Fake Browser Updates to Deploy Malware",
+    "description": "The Hacker News reports on Russian threat actors leveraging fake browser update lures (ClickFix) to distribute malware and compromise organizations.",
+    "url": "https://thehackernews.com/2025/05/russian-hackers-using-clickfix-fake.html"
+  },
+  {
+    "name": "DarkWatchman and Sheriff Malware Hit Russian Organizations",
+    "description": "Coverage of new malware strains, DarkWatchman and Sheriff, targeting Russian entities, with analysis of their techniques and objectives.",
+    "url": "https://thehackernews.com/2025/05/darkwatchman-sheriff-malware-hit-russia.html"
+  },
+  {
+    "name": "NCSC Malware Analysis Report: SparrowDoor",
+    "description": "UK NCSC's technical report analyzing the SparrowDoor malware, including its capabilities, indicators of compromise, and mitigations.",
+    "url": "https://www.ncsc.gov.uk/files/NCSC-MAR-SparrowDoor.pdf"
+  },
+  {
+    "name": "NCSC Advisory: BADBAZAAR and MOONSHINE Technical Analysis and Mitigations",
+    "description": "Technical advisory from the UK NCSC on BADBAZAAR and MOONSHINE malware, with detailed analysis and recommended mitigations.",
+    "url": "https://www.ncsc.gov.uk/files/NCSC-Advisory-BADBAZAAR-and-MOONSHINE-technical-analysis-and-mitigations.pdf"
+  },
+  {
+    "name": "Influence and Cyber Operations: An Update (October 2024)",
+    "description": "OpenAI's report on the intersection of influence operations and cyber activity, providing updates on recent campaigns and tactics.",
+    "url": "https://cdn.openai.com/threat-intelligence-reports/influence-and-cyber-operations-an-update_October-2024.pdf"
+  },
+  {
+    "name": "APT18 (Threat Group-3390) - MITRE ATT&CK",
+    "description": "MITRE ATT&CK entry for APT18 (also known as TG-3390), a Chinese threat group known for cyber espionage campaigns targeting multiple sectors.",
+    "url": "https://attack.mitre.org/groups/G0032/"
+  },
+  {
+    "name": "Operation Soft Cell - MITRE ATT&CK Campaign",
+    "description": "MITRE ATT&CK documentation of Operation Soft Cell, a long-running cyber espionage campaign targeting telecommunications providers.",
+    "url": "https://attack.mitre.org/campaigns/C0023/"
+  },
+  {
+    "name": "Dragos Industrial Ransomware Analysis Q2 2024",
+    "description": "Dragos' quarterly report analyzing ransomware activity and trends targeting industrial organizations and critical infrastructure.",
+    "url": "https://www.dragos.com/blog/dragos-industrial-ransomware-analysis-q2-2024/"
+  }
+]
