@@ -109,9 +109,9 @@ We've conducted comprehensive evaluations of different models to measure their p
 ![Model Evaluation Summary](/images/summary.png)
 
 This summary table shows that:
-- GPT-3.5-Turbo extracts the most entities but at a relatively high cost
+- GPT-3.5-Turbo extracts the most entities, but likely because of chunking
 - Gemini models offer good cost efficiency with varying levels of entity extraction
-- NER extractor is free but extracts fewer relationships and is not able to enrich threat intelligence with existing knowledge.
+- NER extractor is free but extracts fewer entities and relationships. It is also poor at understanding wider context, resulting in fewer relationships.
 - Claude models occupy a middle ground in terms of cost and extraction performance
 
 ![Cost vs. Entities Extracted](/images/cost.png)
